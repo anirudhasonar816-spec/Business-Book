@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0A2463">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Business Book">
+<title>Business Book — CA Aniruddha Sonar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy: #0A2463;
+  --navy-mid: #1a3a7a;
+  --navy-light: #2851a3;
+  --gold: #D4AF37;
+  --gold-light: #f0d060;
+  --white: #FFFFFF;
+  --off-white: #F7F9FC;
+  --light-gray: #EDF0F7;
+  --mid-gray: #8A97B0;
+  --dark: #0D1117;
+  --green: #0A8754;
+  --green-light: #e6f7f0;
+  --red: #C0392B;
+  --red-light: #fdecea;
+  --yellow: #D4900A;
+  --yellow-light: #fff8e1;
+  --shadow-sm: 0 2px 8px rgba(10,36,99,0.08);
+  --shadow-md: 0 4px 20px rgba(10,36,99,0.12);
+  --shadow-lg: 0 8px 40px rgba(10,36,99,0.18);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--dark);
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── TOP HEADER ── */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e4d9e 100%);
+  padding: 20px 20px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: 30px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.08);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-icon {
+  width: 40px; height: 40px;
+  background: var(--gold);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--navy);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+.logo-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 15px;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: 0.2px;
+}
+.logo-tag {
+  font-size: 10px;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.premium-badge {
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.premium-badge:active { transform: scale(0.95); }
+.header-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: var(--white);
+  margin-top: 12px;
+  line-height: 1.1;
+}
+.header-date {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ── NAV TABS ── */
+.nav-tabs {
+  display: flex;
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.nav-tab {
+  flex: 1;
+  padding: 14px 0 12px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mid-gray);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  user-select: none;
+}
+.nav-tab.active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+.nav-tab svg { display: block; margin: 0 auto 3px; }
+
+/* ── SCREENS ── */
+.screen { display: none; padding: 20px 16px 100px; animation: fadeUp 0.3s ease; }
+.screen.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(10,36,99,0.06);
+}
+.card-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--mid-gray);
+  margin-bottom: 14px;
+}
+
+/* ── DASHBOARD STATS ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(10,36,99,0.06);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card.primary {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: white;
+  border: none;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--mid-gray);
+  margin-bottom: 8px;
+}
+.stat-card.primary .stat-label { color: rgba(255,255,255,0.65); }
+.stat-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--navy);
+  line-height: 1;
+}
+.stat-card.primary .stat-value { color: var(--white); font-size: 34px; }
+.stat-sub {
+  font-size: 12px;
+  color: var(--mid-gray);
+  margin-top: 4px;
+}
+.stat-card.primary .stat-sub { color: rgba(255,255,255,0.55); }
+.stat-accent {
+  position: absolute;
+  right: -10px; bottom: -10px;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  opacity: 0.07;
+}
+.stat-profit { background: var(--green); }
+.stat-expense { background: var(--red); }
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.badge-green { background: var(--green-light); color: var(--green); }
+.badge-red { background: var(--red-light); color: var(--red); }
+.badge-yellow { background: var(--yellow-light); color: var(--yellow); }
+
+/* ── HEALTH INDICATOR ── */
+.health-bar {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.health-segment {
+  height: 8px;
+  border-radius: 4px;
+  flex: 1;
+  background: var(--light-gray);
+  transition: background 0.5s;
+}
+.health-good .health-segment:nth-child(1),
+.health-good .health-segment:nth-child(2),
+.health-good .health-segment:nth-child(3) { background: var(--green); }
+.health-avg .health-segment:nth-child(1),
+.health-avg .health-segment:nth-child(2) { background: var(--yellow); }
+.health-risk .health-segment:nth-child(1) { background: var(--red); }
+.health-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.health-good .health-label { color: var(--green); }
+.health-avg .health-label { color: var(--yellow); }
+.health-risk .health-label { color: var(--red); }
+
+/* ── FORM ── */
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.form-input {
+  width: 100%;
+  padding: 16px;
+  border: 1.5px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  color: var(--dark);
+  background: var(--off-white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  -webkit-appearance: none;
+}
+.form-input:focus {
+  border-color: var(--navy);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(10,36,99,0.1);
+}
+.input-prefix {
+  position: relative;
+}
+.input-prefix .form-input { padding-left: 36px; }
+.input-prefix::before {
+  content: '₹';
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--mid-gray);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.3px;
+  -webkit-appearance: none;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: white;
+  box-shadow: 0 4px 16px rgba(10,36,99,0.3);
+}
+.btn-gold {
+  background: linear-gradient(135deg, #b8942a, var(--gold));
+  color: var(--navy);
+  box-shadow: 0 4px 16px rgba(212,175,55,0.35);
+}
+.btn-green {
+  background: var(--green);
+  color: white;
+  box-shadow: 0 4px 16px rgba(10,135,84,0.3);
+}
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--navy);
+  color: var(--navy);
+}
+.btn-whatsapp {
+  background: #25D366;
+  color: white;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+}
+.btn-sm {
+  padding: 12px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  width: auto;
+  display: inline-flex;
+}
+
+/* ── INSIGHT CARDS ── */
+.insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 10px;
+}
+.insight-warning { background: var(--yellow-light); border-left: 3px solid var(--yellow); }
+.insight-danger { background: var(--red-light); border-left: 3px solid var(--red); }
+.insight-good { background: var(--green-light); border-left: 3px solid var(--green); }
+.insight-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.insight-text { font-size: 13px; line-height: 1.5; color: var(--dark); }
+.insight-text strong { display: block; font-weight: 700; margin-bottom: 2px; font-size: 13px; }
+
+/* ── ENTRY LIST ── */
+.entry-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+.entry-item:last-child { border-bottom: none; }
+.entry-date { font-size: 13px; color: var(--mid-gray); font-weight: 500; }
+.entry-amounts { text-align: right; }
+.entry-profit { font-size: 15px; font-weight: 700; }
+.entry-sub { font-size: 11px; color: var(--mid-gray); margin-top: 2px; }
+
+/* ── PREMIUM LOCK ── */
+.premium-lock {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.blur-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  z-index: 10;
+  border-radius: var(--radius);
+}
+.lock-icon { font-size: 36px; margin-bottom: 10px; }
+.lock-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.lock-desc { font-size: 13px; color: var(--mid-gray); margin-bottom: 16px; line-height: 1.5; }
+
+/* ── REPORT ── */
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--light-gray);
+}
+.report-row:last-child { border-bottom: none; }
+.report-row .label { font-size: 13px; color: var(--mid-gray); font-weight: 500; }
+.report-row .value { font-size: 15px; font-weight: 700; color: var(--navy); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  align-items: flex-end;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: white;
+  border-radius: 24px 24px 0 0;
+  padding: 28px 24px 40px;
+  width: 100%;
+  max-width: 480px;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-handle {
+  width: 40px; height: 4px;
+  background: var(--light-gray);
+  border-radius: 2px;
+  margin: 0 auto 20px;
+}
+.modal-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.modal-desc { font-size: 14px; color: var(--mid-gray); margin-bottom: 20px; line-height: 1.5; }
+.feature-list { list-style: none; margin-bottom: 24px; }
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+.feature-list li::before { content: '✓'; color: var(--green); font-weight: 800; font-size: 16px; }
+.modal-close {
+  position: absolute;
+  top: 16px; right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--mid-gray);
+  background: none; border: none;
+  padding: 4px;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--dark);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 9999;
+  white-space: nowrap;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  background: var(--white);
+  border-top: 1px solid var(--light-gray);
+  display: flex;
+  padding: 8px 0 env(safe-area-inset-bottom);
+  z-index: 100;
+  box-shadow: 0 -4px 20px rgba(10,36,99,0.08);
+}
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.bottom-nav-item .nav-icon { font-size: 22px; }
+.bottom-nav-item .nav-label { font-size: 10px; font-weight: 600; color: var(--mid-gray); text-transform: uppercase; letter-spacing: 0.4px; }
+.bottom-nav-item.active .nav-label { color: var(--navy); }
+.bottom-nav-item.active .nav-icon { transform: scale(1.1); }
+
+/* ── LOGIN SCREEN ── */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(160deg, var(--navy) 0%, #1a3a7a 50%, #0A2463 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 24px;
+  z-index: 9000;
+}
+.login-logo {
+  width: 72px; height: 72px;
+  background: var(--gold);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+  color: var(--navy);
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.login-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+  color: white;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.login-sub { font-size: 14px; color: rgba(255,255,255,0.6); text-align: center; margin-bottom: 40px; }
+.login-form { width: 100%; max-width: 360px; }
+.login-form .form-input {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+  color: white;
+  margin-bottom: 12px;
+  padding: 16px;
+  border-radius: 12px;
+}
+.login-form .form-input::placeholder { color: rgba(255,255,255,0.4); }
+.login-form .form-input:focus { border-color: var(--gold); background: rgba(255,255,255,0.15); box-shadow: 0 0 0 3px rgba(212,175,55,0.2); }
+.login-skip { color: rgba(255,255,255,0.5); font-size: 13px; text-align: center; margin-top: 16px; cursor: pointer; text-decoration: underline; }
+
+/* ── CHART CONTAINER ── */
+.chart-container { height: 140px; position: relative; }
+
+/* ── SUCCESS STATE ── */
+.success-icon { font-size: 48px; text-align: center; display: block; margin-bottom: 8px; }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--light-gray);
+  margin: 16px 0;
+}
+
+/* ── MONTH PILL ── */
+.month-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--light-gray);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 0; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-logo">BB</div>
+  <h1 class="login-title">Business Book</h1>
+  <p class="login-sub">by CA Aniruddha Sonar<br>Smart tracking for Indian businesses</p>
+  <div class="login-form">
+    <input class="form-input" type="text" id="loginName" placeholder="Your Name (optional)" autocomplete="name">
+    <input class="form-input" type="tel" id="loginPhone" placeholder="Mobile Number (optional)" autocomplete="tel">
+    <button class="btn btn-gold" onclick="doLogin()" style="margin-top:8px; border-radius:12px;">
+      Start Tracking →
+    </button>
+    <p class="login-skip" onclick="doLogin()">Skip & Continue as Guest</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" style="display:none;">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="logo-area">
+      <div class="logo-icon">BB</div>
+      <div class="logo-text">
+        <span class="logo-name">CA Aniruddha Sonar</span>
+        <span class="logo-tag">Business Book</span>
+      </div>
+    </div>
+    <div class="premium-badge" onclick="openPremiumModal()" id="premiumBadge">⭐ Free</div>
+  </div>
+  <div class="header-title" id="headerGreeting">Good Morning 👋</div>
+  <div class="header-date" id="headerDate"></div>
+</div>
+
+<!-- SCREENS -->
+
+<!-- DASHBOARD -->
+<div class="screen active" id="screen-dashboard">
+  <div class="stats-grid">
+    <div class="stat-card primary">
+      <div class="stat-label">Today's Profit / Loss</div>
+      <div class="stat-value" id="todayPL">₹0</div>
+      <div class="stat-sub" id="todayPLSub">No entry today yet</div>
+      <div class="stat-accent" style="background:white;"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Today Sales</div>
+      <div class="stat-value" id="todaySales" style="font-size:22px; color:var(--green);">₹0</div>
+      <div class="stat-sub" id="todaySalesSub">—</div>
+      <div class="stat-accent stat-profit"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Today Expense</div>
+      <div class="stat-value" id="todayExp" style="font-size:22px; color:var(--red);">₹0</div>
+      <div class="stat-sub" id="todayExpSub">—</div>
+      <div class="stat-accent stat-expense"></div>
+    </div>
+  </div>
+
+  <!-- Monthly Summary -->
+  <div class="card">
+    <div class="card-title">📅 This Month</div>
+    <div class="stats-grid" style="margin-bottom:0; gap:10px;">
+      <div style="text-align:center; padding:12px; background:var(--green-light); border-radius:10px;">
+        <div style="font-size:11px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Total Sales</div>
+        <div style="font-size:20px; font-weight:700; color:var(--green);" id="monthSales">₹0</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:var(--red-light); border-radius:10px;">
+        <div style="font-size:11px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">Total Expense</div>
+        <div style="font-size:20px; font-weight:700; color:var(--red);" id="monthExp">₹0</div>
+      </div>
+    </div>
+    <div style="margin-top:12px; padding:14px; background:var(--off-white); border-radius:10px; display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-size:13px; font-weight:600; color:var(--mid-gray);">Net Profit</span>
+      <span style="font-size:20px; font-weight:800; font-family:'DM Serif Display',serif;" id="monthProfit">₹0</span>
+    </div>
+  </div>
+
+  <!-- Business Health -->
+  <div class="card">
+    <div class="card-title">🏥 Business Health</div>
+    <div id="healthIndicator" class="health-good">
+      <div class="health-bar">
+        <div class="health-segment"></div>
+        <div class="health-segment"></div>
+        <div class="health-segment"></div>
+        <div class="health-segment"></div>
+        <div class="health-segment"></div>
+      </div>
+      <div class="health-label" id="healthLabel">🟢 No data yet — start adding entries</div>
+    </div>
+    <p style="font-size:12px; color:var(--mid-gray); margin-top:8px;" id="healthDesc">Add your daily sales and expenses to see your business health score.</p>
+  </div>
+
+  <!-- Trend Chart (Premium) -->
+  <div id="trendSection">
+    <div class="premium-lock">
+      <div class="card" style="margin-bottom:0;">
+        <div class="card-title">📊 7-Day Expense Trend</div>
+        <div class="chart-container">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+      <div class="blur-overlay" id="trendLock" style="display:none;">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-title">Premium Feature</div>
+        <div class="lock-desc">Unlock full business insights for just ₹99</div>
+        <button class="btn btn-gold" style="padding:14px; font-size:14px; border-radius:10px;" onclick="openPremiumModal()">
+          ⭐ Unlock Premium — ₹99
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;">
+    <button class="btn btn-primary" onclick="switchTab('entry')" style="padding:16px; font-size:14px; border-radius:12px;">
+      ➕ Add Entry
+    </button>
+    <button class="btn btn-whatsapp" onclick="openWhatsApp()" style="padding:16px; font-size:14px; border-radius:12px;">
+      💬 Contact CA
+    </button>
+  </div>
+</div>
+
+<!-- ENTRY SCREEN -->
+<div class="screen" id="screen-entry">
+  <div class="card">
+    <div class="card-title">📝 Daily Entry</div>
+
+    <div class="form-group">
+      <label class="form-label">Date</label>
+      <input class="form-input" type="date" id="entryDate">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Sales Amount</label>
+      <div class="input-prefix">
+        <input class="form-input" type="number" id="entrySales" placeholder="0.00" inputmode="decimal">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Expenses Amount</label>
+      <div class="input-prefix">
+        <input class="form-input" type="number" id="entryExp" placeholder="0.00" inputmode="decimal">
+      </div>
+    </div>
+
+    <!-- Live Preview -->
+    <div id="livePreview" style="background:var(--off-white); border-radius:10px; padding:14px; margin-bottom:16px; display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:13px; color:var(--mid-gray); font-weight:600;">Today's Profit / Loss</span>
+        <span style="font-size:18px; font-weight:800;" id="previewPL">₹0</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" onclick="saveEntry()">
+      💾 Save Entry
+    </button>
+  </div>
+
+  <!-- Recent Entries -->
+  <div class="card">
+    <div class="card-title">🕒 Recent Entries</div>
+    <div id="recentEntries">
+      <div style="text-align:center; padding:20px; color:var(--mid-gray); font-size:14px;">No entries yet. Add your first entry above!</div>
+    </div>
+  </div>
+</div>
+
+<!-- INSIGHTS SCREEN -->
+<div class="screen" id="screen-insights">
+  <div id="insightsFree">
+    <div class="card">
+      <div class="card-title">💡 Smart Insights</div>
+      <div id="insightsList">
+        <div style="text-align:center; padding:20px; color:var(--mid-gray); font-size:14px;">Add at least 3 entries to see insights.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="insightsPremiumLock">
+    <div class="premium-lock">
+      <div class="card" style="filter:blur(2px); pointer-events:none; margin-bottom:0; min-height:300px;">
+        <div class="card-title">📈 Advanced Analytics</div>
+        <div style="height:200px; background:linear-gradient(135deg,var(--light-gray),var(--off-white)); border-radius:10px;"></div>
+      </div>
+      <div class="blur-overlay">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-title">Unlock Full Insights</div>
+        <div class="lock-desc">Get trend analysis, alerts, and monthly comparisons for just ₹99</div>
+        <button class="btn btn-gold" style="padding:14px; font-size:14px; border-radius:10px;" onclick="openPremiumModal()">
+          ⭐ Unlock Premium — ₹99
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORTS SCREEN -->
+<div class="screen" id="screen-reports">
+  <div class="card">
+    <div class="card-title">📋 Monthly Summary</div>
+    <div class="month-pill">📅 <span id="reportMonth"></span></div>
+
+    <div id="reportContent">
+      <div class="report-row"><span class="label">Total Sales</span><span class="value" id="rSales">₹0</span></div>
+      <div class="report-row"><span class="label">Total Expenses</span><span class="value" id="rExp">₹0</span></div>
+      <div class="report-row"><span class="label">Net Profit / Loss</span><span class="value" id="rProfit">₹0</span></div>
+      <div class="report-row"><span class="label">Avg Daily Sales</span><span class="value" id="rAvgSales">₹0</span></div>
+      <div class="report-row"><span class="label">Avg Daily Expense</span><span class="value" id="rAvgExp">₹0</span></div>
+      <div class="report-row"><span class="label">Days Tracked</span><span class="value" id="rDays">0</span></div>
+      <div class="report-row"><span class="label">Best Day Profit</span><span class="value" id="rBest">₹0</span></div>
+    </div>
+  </div>
+
+  <!-- Premium Report Lock -->
+  <div id="reportPremiumLock">
+    <div class="premium-lock">
+      <div class="card" style="filter:blur(2px); pointer-events:none; margin-bottom:0; min-height:220px;">
+        <div class="card-title">📊 Profit vs Expense Chart</div>
+        <div style="height:180px; background:linear-gradient(135deg,var(--light-gray),var(--off-white)); border-radius:10px; display:flex; align-items:center; justify-content:center;">
+          <div style="width:80%; display:flex; gap:8px; align-items:flex-end; height:120px;">
+            <div style="flex:1; background:var(--green); border-radius:4px 4px 0 0; height:70%;"></div>
+            <div style="flex:1; background:var(--red); border-radius:4px 4px 0 0; height:45%;"></div>
+            <div style="flex:1; background:var(--green); border-radius:4px 4px 0 0; height:90%;"></div>
+            <div style="flex:1; background:var(--red); border-radius:4px 4px 0 0; height:60%;"></div>
+            <div style="flex:1; background:var(--green); border-radius:4px 4px 0 0; height:80%;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="blur-overlay">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-title">Premium Report</div>
+        <div class="lock-desc">Unlock full business insights for just ₹99</div>
+        <button class="btn btn-gold" style="padding:14px; font-size:14px; border-radius:10px;" onclick="openPremiumModal()">
+          ⭐ Unlock Premium — ₹99
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <button class="btn btn-whatsapp" onclick="openWhatsApp()">
+      💬 Get Expert Guidance from CA
+    </button>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-item active" onclick="switchTab('dashboard')" id="nav-dashboard">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+  </div>
+  <div class="bottom-nav-item" onclick="switchTab('entry')" id="nav-entry">
+    <span class="nav-icon">➕</span>
+    <span class="nav-label">Entry</span>
+  </div>
+  <div class="bottom-nav-item" onclick="switchTab('insights')" id="nav-insights">
+    <span class="nav-icon">💡</span>
+    <span class="nav-label">Insights</span>
+  </div>
+  <div class="bottom-nav-item" onclick="switchTab('reports')" id="nav-reports">
+    <span class="nav-icon">📋</span>
+    <span class="nav-label">Reports</span>
+  </div>
+</nav>
+
+</div><!-- end mainApp -->
+
+<!-- PREMIUM MODAL -->
+<div class="modal-overlay" id="premiumModal" onclick="closePremiumModal(event)">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closePremiumModalDirect()">✕</button>
+    <div class="modal-handle"></div>
+    <div id="premiumModalContent">
+      <div class="modal-title">⭐ Unlock Premium</div>
+      <div class="modal-desc">Get complete business intelligence for your enterprise at just ₹99 one-time.</div>
+      <ul class="feature-list">
+        <li>Monthly profit & expense reports</li>
+        <li>7-day trend analysis charts</li>
+        <li>Smart business insights & alerts</li>
+        <li>Profit vs Expense comparison</li>
+        <li>Export-ready report view</li>
+        <li>Unlimited entries forever</li>
+      </ul>
+      <button class="btn btn-gold" onclick="openPayment()">
+        🔓 Unlock Now for ₹99
+      </button>
+      <p style="text-align:center; font-size:12px; color:var(--mid-gray); margin-top:12px;">One-time payment. No subscription.</p>
+    </div>
+    <div id="premiumSuccessContent" style="display:none; text-align:center;">
+      <span class="success-icon">🎉</span>
+      <div class="modal-title">Payment Successful!</div>
+      <div class="modal-desc">Welcome to Premium! You now have full access to all Business Book features.</div>
+      <button class="btn btn-primary" onclick="activatePremium()">
+        🚀 Open Premium Dashboard
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────
+let isPremium = JSON.parse(localStorage.getItem('bb_premium') || 'false');
+let userName = localStorage.getItem('bb_name') || '';
+let entries = JSON.parse(localStorage.getItem('bb_entries') || '[]');
+let freeUsageCount = parseInt(localStorage.getItem('bb_uses') || '0');
+let chartInstance = null;
+
+const RAZORPAY_LINK = 'https://rzp.io/l/yourpaymentlink';
+const WA_NUMBER = '919130577969';
+
+// ─── INIT ─────────────────────────────────────────────────
+window.onload = function() {
+  const loggedIn = localStorage.getItem('bb_loggedin');
+  if (loggedIn) {
+    showApp();
+  }
+  setHeaderDate();
+  setGreeting();
+};
+
+function setHeaderDate() {
+  const now = new Date();
+  const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+  document.getElementById('headerDate').textContent = now.toLocaleDateString('en-IN', opts);
+
+  // Set default entry date
+  const d = now.toISOString().split('T')[0];
+  document.getElementById('entryDate').value = d;
+}
+
+function setGreeting() {
+  const h = new Date().getHours();
+  const g = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
+  const name = userName ? `, ${userName}` : '';
+  document.getElementById('headerGreeting').textContent = `${g}${name} 👋`;
+
+  // Set report month
+  const mn = new Date().toLocaleDateString('en-IN', { month:'long', year:'numeric' });
+  document.getElementById('reportMonth').textContent = mn;
+}
+
+// ─── LOGIN ────────────────────────────────────────────────
+function doLogin() {
+  const name = document.getElementById('loginName').value.trim();
+  const phone = document.getElementById('loginPhone').value.trim();
+  if (name) { localStorage.setItem('bb_name', name); userName = name; }
+  if (phone) localStorage.setItem('bb_phone', phone);
+  localStorage.setItem('bb_loggedin', '1');
+  document.getElementById('loginScreen').style.display = 'none';
+  showApp();
+}
+
+function showApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+  userName = localStorage.getItem('bb_name') || '';
+  setGreeting();
+  updateDashboard();
+  updatePremiumUI();
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.bottom-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('screen-' + tab).classList.add('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+
+  if (tab === 'dashboard') { updateDashboard(); }
+  if (tab === 'insights') { updateInsights(); trackUsage(); }
+  if (tab === 'reports') { updateReports(); trackUsage(); }
+}
+
+// ─── PREMIUM USAGE TRACKING ───────────────────────────────
+function trackUsage() {
+  if (isPremium) return;
+  freeUsageCount++;
+  localStorage.setItem('bb_uses', freeUsageCount);
+  if (freeUsageCount > 2) {
+    setTimeout(() => showLocks(), 300);
+  }
+}
+
+function showLocks() {
+  if (isPremium) return;
+  document.getElementById('trendLock').style.display = 'flex';
+  document.getElementById('insightsPremiumLock').style.display = 'block';
+  document.getElementById('reportPremiumLock').style.display = 'block';
+}
+
+// ─── ENTRY ────────────────────────────────────────────────
+function saveEntry() {
+  const date = document.getElementById('entryDate').value;
+  const sales = parseFloat(document.getElementById('entrySales').value) || 0;
+  const exp = parseFloat(document.getElementById('entryExp').value) || 0;
+
+  if (!date) { showToast('⚠️ Please select a date'); return; }
+  if (sales === 0 && exp === 0) { showToast('⚠️ Enter at least sales or expense'); return; }
+
+  // Remove existing entry for same date
+  entries = entries.filter(e => e.date !== date);
+  entries.push({ date, sales, exp, profit: sales - exp });
+  entries.sort((a,b) => b.date.localeCompare(a.date));
+  localStorage.setItem('bb_entries', JSON.stringify(entries));
+
+  showToast('✅ Entry saved successfully!');
+  document.getElementById('entrySales').value = '';
+  document.getElementById('entryExp').value = '';
+  document.getElementById('livePreview').style.display = 'none';
+
+  renderRecentEntries();
+  updateDashboard();
+}
+
+// Live preview
+document.addEventListener('DOMContentLoaded', () => {});
+window.addEventListener('load', () => {
+  ['entrySales','entryExp'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateLivePreview);
+  });
+});
+
+function updateLivePreview() {
+  const s = parseFloat(document.getElementById('entrySales').value) || 0;
+  const e = parseFloat(document.getElementById('entryExp').value) || 0;
+  if (s > 0 || e > 0) {
+    const p = s - e;
+    const el = document.getElementById('previewPL');
+    el.textContent = fmtINR(p);
+    el.style.color = p >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('livePreview').style.display = 'block';
+  } else {
+    document.getElementById('livePreview').style.display = 'none';
+  }
+}
+
+function renderRecentEntries() {
+  const container = document.getElementById('recentEntries');
+  if (entries.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--mid-gray);font-size:14px;">No entries yet. Add your first entry above!</div>';
+    return;
+  }
+  const recent = entries.slice(0, 7);
+  container.innerHTML = recent.map(e => {
+    const pColor = e.profit >= 0 ? 'var(--green)' : 'var(--red)';
+    const pSign = e.profit >= 0 ? '+' : '';
+    const dLabel = formatDateShort(e.date);
+    return `
+      <div class="entry-item">
+        <div>
+          <div style="font-size:14px; font-weight:600; color:var(--navy);">${dLabel}</div>
+          <div class="entry-sub">Sales: ${fmtINR(e.sales)} · Exp: ${fmtINR(e.exp)}</div>
+        </div>
+        <div class="entry-amounts">
+          <div class="entry-profit" style="color:${pColor};">${pSign}${fmtINR(e.profit)}</div>
+          <div class="entry-sub">${e.profit >= 0 ? 'Profit' : 'Loss'}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────
+function updateDashboard() {
+  const today = new Date().toISOString().split('T')[0];
+  const todayEntry = entries.find(e => e.date === today);
+
+  // Today stats
+  if (todayEntry) {
+    document.getElementById('todayPL').textContent = fmtINR(todayEntry.profit);
+    document.getElementById('todayPLSub').textContent = todayEntry.profit >= 0 ? '🟢 Profitable today' : '🔴 Loss today';
+    document.getElementById('todaySales').textContent = fmtINR(todayEntry.sales);
+    document.getElementById('todayExp').textContent = fmtINR(todayEntry.exp);
+    document.getElementById('todaySalesSub').textContent = 'Today';
+    document.getElementById('todayExpSub').textContent = 'Today';
+  } else {
+    document.getElementById('todayPL').textContent = '₹ —';
+    document.getElementById('todayPLSub').textContent = 'No entry today yet';
+    document.getElementById('todaySales').textContent = '₹ —';
+    document.getElementById('todayExp').textContent = '₹ —';
+  }
+
+  // Monthly
+  const now = new Date();
+  const monthEntries = entries.filter(e => {
+    const d = new Date(e.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  const mSales = monthEntries.reduce((a,b) => a + b.sales, 0);
+  const mExp = monthEntries.reduce((a,b) => a + b.exp, 0);
+  const mProfit = mSales - mExp;
+  document.getElementById('monthSales').textContent = fmtINR(mSales);
+  document.getElementById('monthExp').textContent = fmtINR(mExp);
+  const mpEl = document.getElementById('monthProfit');
+  mpEl.textContent = fmtINR(mProfit);
+  mpEl.style.color = mProfit >= 0 ? 'var(--green)' : 'var(--red)';
+
+  // Health
+  updateHealth(monthEntries, mSales, mExp);
+
+  // Chart
+  renderTrendChart();
+
+  // Recent entries
+  renderRecentEntries();
+
+  // Premium UI
+  updatePremiumUI();
+}
+
+function updateHealth(monthEntries, mSales, mExp) {
+  const el = document.getElementById('healthIndicator');
+  const label = document.getElementById('healthLabel');
+  const desc = document.getElementById('healthDesc');
+  el.className = '';
+
+  if (monthEntries.length < 3) {
+    el.className = 'health-good';
+    label.textContent = '⚪ Add more entries to calculate health';
+    desc.textContent = 'Track at least 3 days to see your business health score.';
+    return;
+  }
+
+  const ratio = mExp / (mSales || 1);
+  if (ratio < 0.6) {
+    el.className = 'health-good';
+    label.textContent = '🟢 Excellent — Business is healthy!';
+    desc.textContent = 'Your expenses are well controlled. Profit margin is strong.';
+  } else if (ratio < 0.85) {
+    el.className = 'health-avg';
+    label.textContent = '🟡 Average — Monitor expenses closely';
+    desc.textContent = 'Expenses are eating into profits. Consider reducing costs.';
+  } else {
+    el.className = 'health-risk';
+    label.textContent = '🔴 Risk — Expenses too high!';
+    desc.textContent = 'Your business is at risk. Expenses exceed 85% of sales. Immediate action needed.';
+  }
+}
+
+function renderTrendChart() {
+  const ctx = document.getElementById('trendChart');
+  if (!ctx) return;
+
+  const last7 = getLast7Days();
+  const labels = last7.map(d => formatDateShort(d, true));
+  const expData = last7.map(d => {
+    const e = entries.find(en => en.date === d);
+    return e ? e.exp : 0;
+  });
+  const salesData = last7.map(d => {
+    const e = entries.find(en => en.date === d);
+    return e ? e.sales : 0;
+  });
+
+  if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Sales',
+          data: salesData,
+          backgroundColor: 'rgba(10,135,84,0.7)',
+          borderRadius: 4,
+        },
+        {
+          label: 'Expense',
+          data: expData,
+          backgroundColor: 'rgba(192,57,43,0.7)',
+          borderRadius: 4,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#8A97B0' } },
+        y: { grid: { color: '#EDF0F7' }, ticks: { font: { size: 10 }, color: '#8A97B0', callback: v => '₹' + fmtNum(v) } }
+      }
+    }
+  });
+}
+
+// ─── INSIGHTS ─────────────────────────────────────────────
+function updateInsights() {
+  const container = document.getElementById('insightsList');
+  if (entries.length < 3) {
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--mid-gray);font-size:14px;">Add at least 3 entries to see insights.</div>';
+    return;
+  }
+
+  const insights = [];
+  const recent5 = entries.slice(0, 5);
+  const avgExp = recent5.reduce((a,b) => a+b.exp, 0) / recent5.length;
+  const avgSales = recent5.reduce((a,b) => a+b.sales, 0) / recent5.length;
+  const avgProfit = recent5.reduce((a,b) => a+b.profit, 0) / recent5.length;
+
+  // Expense trend
+  if (recent5.length >= 3) {
+    const oldExp = entries.slice(3,6).reduce((a,b) => a+b.exp, 0) / Math.min(3, entries.slice(3,6).length);
+    if (avgExp > oldExp * 1.15) {
+      insights.push({ type:'warning', icon:'⚠️', title:'Expenses Rising', text:'Your average daily expenses have increased by over 15% recently. Review your spending to protect margins.' });
+    }
+  }
+
+  // Profit dropping
+  if (avgProfit < 0) {
+    insights.push({ type:'danger', icon:'🚨', title:'Losses Detected', text:'Your recent entries show net losses. Sales need to increase or expenses must be reduced immediately.' });
+  } else if (avgProfit < avgSales * 0.1) {
+    insights.push({ type:'warning', icon:'📉', title:'Profit Margin Low', text:`Your profit margin is below 10%. Average profit: ${fmtINR(avgProfit)}. Target at least 20%.` });
+  }
+
+  // Sales level
+  if (avgSales < 5000) {
+    insights.push({ type:'warning', icon:'📣', title:'Sales Could Be Higher', text:'Consider promotions, referrals, or new product offers to boost daily sales volume.' });
+  }
+
+  // Positive insight
+  if (avgProfit > avgSales * 0.3) {
+    insights.push({ type:'good', icon:'🎯', title:'Excellent Profit Margin', text:`You're maintaining over 30% profit margin. Average daily profit: ${fmtINR(avgProfit)}. Keep it up!` });
+  }
+
+  if (insights.length === 0) {
+    insights.push({ type:'good', icon:'✅', title:'Business Looking Stable', text:'No major concerns detected. Keep tracking daily to get more detailed insights.' });
+  }
+
+  container.innerHTML = insights.map(i => `
+    <div class="insight insight-${i.type === 'warning' ? 'warning' : i.type === 'danger' ? 'danger' : 'good'}">
+      <span class="insight-icon">${i.icon}</span>
+      <div class="insight-text"><strong>${i.title}</strong>${i.text}</div>
+    </div>`).join('');
+
+  // Show/hide premium lock
+  const lockEl = document.getElementById('insightsPremiumLock');
+  if (!isPremium && freeUsageCount > 2) {
+    lockEl.style.display = 'block';
+  } else {
+    lockEl.style.display = 'none';
+  }
+}
+
+// ─── REPORTS ──────────────────────────────────────────────
+function updateReports() {
+  const now = new Date();
+  const monthEntries = entries.filter(e => {
+    const d = new Date(e.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+
+  const mSales = monthEntries.reduce((a,b) => a+b.sales, 0);
+  const mExp = monthEntries.reduce((a,b) => a+b.exp, 0);
+  const mProfit = mSales - mExp;
+  const n = monthEntries.length || 1;
+  const best = monthEntries.length ? Math.max(...monthEntries.map(e => e.profit)) : 0;
+
+  document.getElementById('rSales').textContent = fmtINR(mSales);
+  document.getElementById('rExp').textContent = fmtINR(mExp);
+  document.getElementById('rProfit').textContent = fmtINR(mProfit);
+  document.getElementById('rProfit').style.color = mProfit >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('rAvgSales').textContent = fmtINR(mSales / n);
+  document.getElementById('rAvgExp').textContent = fmtINR(mExp / n);
+  document.getElementById('rDays').textContent = monthEntries.length;
+  document.getElementById('rBest').textContent = fmtINR(best);
+
+  // Lock
+  const lockEl = document.getElementById('reportPremiumLock');
+  if (!isPremium && freeUsageCount > 2) {
+    lockEl.style.display = 'block';
+  } else {
+    lockEl.style.display = 'none';
+  }
+}
+
+// ─── PREMIUM ──────────────────────────────────────────────
+function updatePremiumUI() {
+  const badge = document.getElementById('premiumBadge');
+  if (isPremium) {
+    badge.textContent = '⭐ Premium';
+    badge.style.background = 'var(--gold)';
+    document.getElementById('trendLock').style.display = 'none';
+    document.getElementById('insightsPremiumLock').style.display = 'none';
+    document.getElementById('reportPremiumLock').style.display = 'none';
+  } else {
+    badge.textContent = '⭐ Free';
+    if (freeUsageCount > 2) showLocks();
+  }
+}
+
+function openPremiumModal() {
+  document.getElementById('premiumModal').classList.add('open');
+  document.getElementById('premiumModalContent').style.display = 'block';
+  document.getElementById('premiumSuccessContent').style.display = 'none';
+}
+
+function closePremiumModal(e) {
+  if (e.target === document.getElementById('premiumModal')) {
+    closePremiumModalDirect();
+  }
+}
+function closePremiumModalDirect() {
+  document.getElementById('premiumModal').classList.remove('open');
+}
+
+function openPayment() {
+  // Open Razorpay link
+  window.open(RAZORPAY_LINK, '_blank');
+  // Show success option after 3 seconds (simulate)
+  setTimeout(() => {
+    document.getElementById('premiumModalContent').style.display = 'none';
+    document.getElementById('premiumSuccessContent').style.display = 'block';
+  }, 3000);
+}
+
+function activatePremium() {
+  isPremium = true;
+  localStorage.setItem('bb_premium', 'true');
+  closePremiumModalDirect();
+  updatePremiumUI();
+  showToast('🎉 Premium activated! Enjoy full access.');
+  updateDashboard();
+}
+
+// ─── HELPERS ──────────────────────────────────────────────
+function fmtINR(n) {
+  if (n === undefined || n === null) return '₹0';
+  const abs = Math.abs(n);
+  let s;
+  if (abs >= 10000000) s = (abs/10000000).toFixed(1) + ' Cr';
+  else if (abs >= 100000) s = (abs/100000).toFixed(1) + ' L';
+  else if (abs >= 1000) s = (abs/1000).toFixed(1) + 'k';
+  else s = abs.toLocaleString('en-IN');
+  return (n < 0 ? '-₹' : '₹') + s;
+}
+
+function fmtNum(n) {
+  if (n >= 100000) return (n/100000).toFixed(1)+'L';
+  if (n >= 1000) return (n/1000).toFixed(1)+'k';
+  return n;
+}
+
+function formatDateShort(dateStr, short) {
+  const d = new Date(dateStr + 'T00:00:00');
+  if (short) return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short' });
+  return d.toLocaleDateString('en-IN', { weekday:'short', day:'2-digit', month:'short' });
+}
+
+function getLast7Days() {
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    days.push(d.toISOString().split('T')[0]);
+  }
+  return days;
+}
+
+function openWhatsApp() {
+  window.open(`https://wa.me/${WA_NUMBER}?text=Hi%20CA%20Aniruddha%20Sonar%2C%20I%20need%20expert%20guidance%20for%20my%20business.`, '_blank');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Init live preview listeners
+setTimeout(() => {
+  ['entrySales','entryExp'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateLivePreview);
+  });
+}, 100);
+</script>
+</body>
+</html>
